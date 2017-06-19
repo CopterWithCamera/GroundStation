@@ -14,18 +14,63 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>140</y>
-      <width>75</width>
-      <height>23</height>
+      <x>10</x>
+      <y>10</y>
+      <width>81</width>
+      <height>101</height>
      </rect>
     </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
+    <layout class="QVBoxLayout" name="Layout_SerialPort">
+     <item>
+      <widget class="QComboBox" name="comboBox_PortName"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_BaudRate">
+       <item>
+        <property name="text">
+         <string>115200</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>128000</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>230400</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>256000</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>460800</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_OpenPort">
+       <property name="text">
+        <string>打开串口</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_GetPort">
+       <property name="text">
+        <string>获取串口</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

@@ -22,14 +22,16 @@ public:
 private slots:
     void main_test_slot();
 
-    void on_pushButton_clicked();
+    void on_pushButton_GetPort_clicked();
+
+    void on_pushButton_OpenPort_clicked();
 
 private:
     Ui::MainWindow *ui;
 
     //类、线程
-    QThread n;
-    SerialPort m;
+    QThread MyComThread;
+    SerialPort MyCom;
 
     //测试用
     QTimer timer;
