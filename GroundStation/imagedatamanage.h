@@ -19,7 +19,7 @@ public:
     int image_counter;  //图像计数器
 
 signals:
-
+    void Image_Ok_Signals();
 public slots:
     void Image_Save();
     void Image_Generate();

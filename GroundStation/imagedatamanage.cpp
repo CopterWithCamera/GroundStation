@@ -26,6 +26,8 @@ void imagedatamanage::Image_Generate()
     //DisImage变换大小并存入imgScaled
     imgScaled = DisImage.scaled(400,240,Qt::KeepAspectRatio);
 
+    emit Image_Ok_Signals();    //发出图像生成完毕信号
+
     Image_Save();
 }
 

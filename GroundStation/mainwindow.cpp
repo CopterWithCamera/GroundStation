@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     MyImg.Image_Generate();
     DisplayImage();
 
+    connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+
 }
 
 MainWindow::~MainWindow()
@@ -169,7 +171,6 @@ void MainWindow::Display_on_DataDisplay_ReceiveBox(QByteArray data)
 
     ui->DataDisplay_ReceiveBox->clear();
     ui->DataDisplay_ReceiveBox->append(tmpstr);
-
 }
 
 void MainWindow::on_Button_pathchange_clicked()
@@ -200,4 +201,14 @@ void MainWindow::on_Button_numberclear_clicked()
 void MainWindow::DisplayImage()
 {
     ui->label_image->setPixmap(QPixmap::fromImage(imgScaled)); //显示变换大小后的QImage对象
+}
+
+void MainWindow::on_Button_Closetrans_clicked()
+{
+    disconnect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+}
+
+void MainWindow::on_Button_Opentrans_clicked()
+{
+    connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 }
