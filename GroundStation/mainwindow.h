@@ -6,6 +6,11 @@
 #include <QTimer>
 #include <QDebug>
 #include "serialport.h"
+#include "imagedatamanage.h"
+
+#include "main.h"
+#include "ui_disimage.h"
+#include "imagedialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,12 +24,28 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void StringToHex(QString str, QByteArray &senddata);    //字符串转16进制
+    char ConvertHexChar(char ch);
+
 private slots:
-    void main_test_slot();
 
     void on_pushButton_GetPort_clicked();
 
     void on_pushButton_OpenPort_clicked();
+
+    void on_DataDisplay_Send_2_clicked();
+
+    void on_DataDisplay_Send_clicked();
+
+    void Display_on_DataDisplay_ReceiveBox(QByteArray data);
+
+    void on_Button_pathchange_clicked();
+
+    void on_checkBox_imagesave_stateChanged(int arg1);
+
+    void on_Button_numberclear_clicked();
+
+    void DisplayImage();
 
 private:
     Ui::MainWindow *ui;
@@ -33,8 +54,9 @@ private:
     QThread MyComThread;
     SerialPort MyCom;
 
-    //测试用
-    QTimer timer;
+    QThread MyImgThread;
+    imagedatamanage MyImg;
+
 };
 
 #endif // MAINWINDOW_H

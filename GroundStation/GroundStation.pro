@@ -27,11 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    serialport.cpp
+    serialport.cpp \
+    imagedatamanage.cpp
 
 HEADERS += \
         mainwindow.h \
-    serialport.h
+    serialport.h \
+    imagedatamanage.h \
+    main.h
 
 FORMS += \
         mainwindow.ui
