@@ -11,6 +11,7 @@
 #include "main.h"
 #include "ui_disimage.h"
 #include "imagedialog.h"
+#include "imagesave.h"
 
 namespace Ui {
 class MainWindow;
@@ -64,6 +65,9 @@ private:
 
     QThread MyImgThread;
     imagedatamanage MyImg;
+
+    QThread MyImgSaveThread;
+    ImageSave MyImgSave;
 
 };
 

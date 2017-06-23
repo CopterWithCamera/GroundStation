@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&MyCom,SerialPort::SerialPort_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
 
     //显示默认文件路径
-    ui->lineEdit_filepath->setText(MyImg.file_path);
+    ui->lineEdit_filepath->setText(file_path);
 
     //初始化图像数组并显示图像
     for(int i=0;i<Img_Size;i++)
@@ -40,6 +40,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //默认不开启图像显示
     //connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 
+//***************** 把图像处理函数托管给线程 ******************************
+
+    MyImgSave.moveToThread(&MyImgSaveThread);
+    MyImgSaveThread.start();
+
+    //connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+
 }
 
 MainWindow::~MainWindow()
@@ -49,6 +56,9 @@ MainWindow::~MainWindow()
 
     MyImgThread.quit();
     MyImgThread.wait();
+
+    MyImgSaveThread.quit();
+    MyImgSaveThread.wait();
 
     delete ui;
 }
@@ -183,19 +193,26 @@ void MainWindow::on_Button_pathchange_clicked()
     }
     else
     {
-        MyImg.file_path = file_path_tmp;
-        ui->lineEdit_filepath->setText(MyImg.file_path);
+        file_path = file_path_tmp;
+        ui->lineEdit_filepath->setText(file_path);
     }
 }
 
 void MainWindow::on_checkBox_imagesave_stateChanged(int arg1)
 {
-    MyImg.image_save_flag = (bool)arg1;
+    if(arg1)
+    {
+        connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+    }
+    else
+    {
+        disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+    }
 }
 
 void MainWindow::on_Button_numberclear_clicked()
 {
-    MyImg.image_counter = 0;
+    MyImgSave.image_counter = 0;
 }
 
 //将数组中的图像显示在屏幕上

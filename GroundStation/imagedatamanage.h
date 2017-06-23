@@ -14,14 +14,10 @@ class imagedatamanage : public QObject
 public:
     explicit imagedatamanage(QObject *parent = nullptr);
 
-    bool image_save_flag;
-    QString file_path;   //文件路径
-    int image_counter;  //图像计数器
-
 signals:
     void Image_Ok_Signals();
+    void DisImage_Ok_Signals();
 public slots:
-    void Image_Save();
     void Image_Generate();
 
 };
