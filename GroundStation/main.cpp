@@ -8,6 +8,10 @@ QImage DisImage;                            //生成的图像
 QImage imgScaled;                           //缩放后的图像
 QString file_path;                          //文件路径
 
+bool flag_datatrans = 0;
+bool flag_imagedisplay = 0;
+bool flag_imagesave = 0;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

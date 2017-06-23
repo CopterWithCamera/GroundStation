@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //更新串口列表
     ui->comboBox_PortName->addItems(MyCom.SerialPort_Get_Port_List());
 
-    //串口对外信号连接（默认不开启数据显示）
-    //connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+    //串口对外信号连接
+    connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 
 //***************** 把图像处理函数托管给线程 ******************************
 
@@ -38,14 +38,14 @@ MainWindow::MainWindow(QWidget *parent) :
     DisplayImage();
 
     //默认不开启图像显示
-    //connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+    connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 
 //***************** 把图像处理函数托管给线程 ******************************
 
     MyImgSave.moveToThread(&MyImgSaveThread);
     MyImgSaveThread.start();
 
-    //connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+    connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
 
 }
 
@@ -164,24 +164,34 @@ void MainWindow::on_DataDisplay_Send_clicked()
 
 void MainWindow::Display_on_DataDisplay_ReceiveBox(QByteArray data)
 {
-    int size = data.size();
-
-    QString tmpstr = ui->DataDisplay_ReceiveBox->toPlainText();
-
-    if(tmpstr.length() > 100000)
-        tmpstr.clear();
-
-    for(int i=0;i<size;i++)
+    if(flag_datatrans)
     {
-        unsigned char tmp = data[i];
-        //QString str = QString::number(tmp,16).toUpper();
-        QString str = QString("%1").arg(tmp&0xFF,2,16,QLatin1Char('0'));    //带自动补0
-        tmpstr += str;
-        tmpstr += " ";
-    }
+        int size = data.size();
 
-    ui->DataDisplay_ReceiveBox->clear();
-    ui->DataDisplay_ReceiveBox->append(tmpstr);
+        QString tmpstr = ui->DataDisplay_ReceiveBox->toPlainText();
+
+        if(tmpstr.length() > 100000)
+            tmpstr.clear();
+
+        for(int i=0;i<size;i++)
+        {
+            unsigned char tmp = data[i];
+            //QString str = QString::number(tmp,16).toUpper();
+            QString str = QString("%1").arg(tmp&0xFF,2,16,QLatin1Char('0'));    //带自动补0
+            tmpstr += str;
+            tmpstr += " ";
+        }
+
+        ui->DataDisplay_ReceiveBox->clear();
+        ui->DataDisplay_ReceiveBox->append(tmpstr);
+    }
+}
+
+//将数组中的图像显示在屏幕上
+void MainWindow::DisplayImage()
+{
+    if(flag_imagedisplay)
+        ui->label_image->setPixmap(QPixmap::fromImage(imgScaled)); //显示变换大小后的QImage对象
 }
 
 void MainWindow::on_Button_pathchange_clicked()
@@ -202,11 +212,13 @@ void MainWindow::on_checkBox_imagesave_stateChanged(int arg1)
 {
     if(arg1)
     {
-        connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+        flag_imagesave = 1;
+        //connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
     }
     else
     {
-        disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+        flag_imagesave = 0;
+        //disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
     }
 }
 
@@ -215,28 +227,26 @@ void MainWindow::on_Button_numberclear_clicked()
     MyImgSave.image_counter = 0;
 }
 
-//将数组中的图像显示在屏幕上
-void MainWindow::DisplayImage()
-{
-    ui->label_image->setPixmap(QPixmap::fromImage(imgScaled)); //显示变换大小后的QImage对象
-}
-
 void MainWindow::on_Button_Closetrans_clicked()
 {
-    disconnect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+    flag_datatrans = 0;
+    //disconnect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 }
 
 void MainWindow::on_Button_Opentrans_clicked()
 {
-    connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+    flag_datatrans = 1;
+    //connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 }
 
 void MainWindow::on_Button_OpenImage_clicked()
 {
-    connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+    flag_imagedisplay = 1;
+    //connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 }
 
 void MainWindow::on_Button_CloseImage_clicked()
 {
-    disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+    flag_imagedisplay = 0;
+    //disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 }

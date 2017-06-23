@@ -15,4 +15,8 @@ extern QImage DisImage;                            //生成的图像
 extern QImage imgScaled;
 extern QString file_path;
 
+extern bool flag_datatrans;
+extern bool flag_imagedisplay;
+extern bool flag_imagesave;
+
 #endif // MAIN_H
