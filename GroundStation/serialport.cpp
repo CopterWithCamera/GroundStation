@@ -146,7 +146,9 @@ void SerialPort::Byte_Handle_Image(unsigned char data)
     case 1:
         if(data == 0xFE)    //必须连续接入包头2
             mycase = 2;
-        else                //否则包头无效
+        else if(data = 0x01)    //否则包头无效
+            mycase = 1;
+        else
             mycase = 0;
         break;
     case 2:                 //解包

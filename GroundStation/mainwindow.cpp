@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //更新串口列表
     ui->comboBox_PortName->addItems(MyCom.SerialPort_Get_Port_List());
 
-    //串口对外信号连接
-    connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+    //串口对外信号连接（默认不开启数据显示）
+    //connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 
 //***************** 把图像处理函数托管给线程 ******************************
 
@@ -37,7 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     MyImg.Image_Generate();
     DisplayImage();
 
-    connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+    //默认不开启图像显示
+    //connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 
 }
 
@@ -157,7 +158,7 @@ void MainWindow::Display_on_DataDisplay_ReceiveBox(QByteArray data)
 
     QString tmpstr = ui->DataDisplay_ReceiveBox->toPlainText();
 
-    if(tmpstr.length() > 20000)
+    if(tmpstr.length() > 100000)
         tmpstr.clear();
 
     for(int i=0;i<size;i++)
@@ -211,4 +212,14 @@ void MainWindow::on_Button_Closetrans_clicked()
 void MainWindow::on_Button_Opentrans_clicked()
 {
     connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+}
+
+void MainWindow::on_Button_OpenImage_clicked()
+{
+    connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+}
+
+void MainWindow::on_Button_CloseImage_clicked()
+{
+    disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 }

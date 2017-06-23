@@ -51,6 +51,10 @@ private slots:
 
     void on_Button_Opentrans_clicked();
 
+    void on_Button_OpenImage_clicked();
+
+    void on_Button_CloseImage_clicked();
+
 private:
     Ui::MainWindow *ui;
 

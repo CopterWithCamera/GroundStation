@@ -41,11 +41,11 @@ void imagedatamanage::Image_Save()
         //生成文件名
         QString strtmp;
         strtmp.setNum(image_counter);
-        QString filename = file_path + "/" + strtmp + ".jpg";
+        QString filename = file_path + "/" + strtmp + ".bmp";
 
         //保存图片
         QPixmap imgtmp = QPixmap::fromImage(DisImage);
-        imgtmp.save(filename,"jpg",100);
+        imgtmp.save(filename,"bmp",100);
     }
 }
 
