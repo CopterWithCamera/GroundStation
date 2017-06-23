@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>874</width>
+    <width>895</width>
     <height>483</height>
    </rect>
   </property>
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>101</width>
-      <height>151</height>
+      <width>121</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="title">
@@ -31,7 +31,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>79</width>
+       <width>101</width>
        <height>20</height>
       </rect>
      </property>
@@ -41,7 +41,7 @@
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>79</width>
+       <width>101</width>
        <height>20</height>
       </rect>
      </property>
@@ -79,7 +79,7 @@
       <rect>
        <x>10</x>
        <y>80</y>
-       <width>81</width>
+       <width>101</width>
        <height>23</height>
       </rect>
      </property>
@@ -92,7 +92,7 @@
       <rect>
        <x>10</x>
        <y>110</y>
-       <width>81</width>
+       <width>101</width>
        <height>23</height>
       </rect>
      </property>
@@ -106,7 +106,7 @@
      <rect>
       <x>10</x>
       <y>390</y>
-      <width>851</width>
+      <width>871</width>
       <height>81</height>
      </rect>
     </property>
@@ -129,7 +129,7 @@
     <widget class="QPushButton" name="Button_numberclear">
      <property name="geometry">
       <rect>
-       <x>770</x>
+       <x>790</x>
        <y>50</y>
        <width>71</width>
        <height>23</height>
@@ -144,7 +144,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>831</width>
+       <width>851</width>
        <height>20</height>
       </rect>
      </property>
@@ -169,10 +169,130 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="group_Image">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>140</x>
+      <y>10</y>
+      <width>481</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+     border-width: 1px;
+     border-style: solid;
+     border-color: rgb(255, 170, 0);
+}
+</string>
+    </property>
+    <property name="title">
+     <string>Image</string>
+    </property>
+    <widget class="QLabel" name="label_image">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>400</width>
+       <height>240</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+     border-width: 1px;
+     border-style: solid;
+     border-color: rgb(120, 120, 120);
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Button_OpenImage">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>20</y>
+       <width>51</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>open</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Button_CloseImage">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>50</y>
+       <width>51</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>close</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="group_Tcp">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>121</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Tcp Client</string>
+    </property>
+    <widget class="QLineEdit" name="LineEdit_IP">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>10.10.100.254</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="LineEdit_port">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>8899</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Button_Tcpconnnect">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>101</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>连接</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="group_Datatrans">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
       <y>10</y>
       <width>251</width>
       <height>271</height>
@@ -181,7 +301,7 @@
     <property name="title">
      <string>Data Trans</string>
     </property>
-    <widget class="QPushButton" name="DataDisplay_Send_2">
+    <widget class="QPushButton" name="DataDisplay_Clear">
      <property name="geometry">
       <rect>
        <x>190</x>
@@ -244,74 +364,6 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>50</y>
-       <width>51</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>close</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>10</y>
-      <width>481</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel{
-     border-width: 1px;
-     border-style: solid;
-     border-color: rgb(255, 170, 0);
-}
-</string>
-    </property>
-    <property name="title">
-     <string>Image</string>
-    </property>
-    <widget class="QLabel" name="label_image">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>400</width>
-       <height>240</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel{
-     border-width: 1px;
-     border-style: solid;
-     border-color: rgb(120, 120, 120);
-}
-</string>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Button_OpenImage">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
-       <y>20</y>
-       <width>51</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>open</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Button_CloseImage">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
        <y>50</y>
        <width>51</width>
        <height>23</height>

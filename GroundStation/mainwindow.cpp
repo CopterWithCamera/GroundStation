@@ -149,7 +149,7 @@ void MainWindow::on_pushButton_OpenPort_clicked()
     }
 }
 
-void MainWindow::on_DataDisplay_Send_2_clicked()
+void MainWindow::on_DataDisplay_Clear_clicked()
 {
     ui->DataDisplay_ReceiveBox->clear();
 }

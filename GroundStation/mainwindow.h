@@ -34,8 +34,6 @@ private slots:
 
     void on_pushButton_OpenPort_clicked();
 
-    void on_DataDisplay_Send_2_clicked();
-
     void on_DataDisplay_Send_clicked();
 
     void Display_on_DataDisplay_ReceiveBox(QByteArray data);
@@ -55,6 +53,8 @@ private slots:
     void on_Button_OpenImage_clicked();
 
     void on_Button_CloseImage_clicked();
+
+    void on_DataDisplay_Clear_clicked();
 
 private:
     Ui::MainWindow *ui;

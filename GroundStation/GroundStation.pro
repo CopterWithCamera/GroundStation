@@ -29,14 +29,16 @@ SOURCES += \
         mainwindow.cpp \
     serialport.cpp \
     imagedatamanage.cpp \
-    imagesave.cpp
+    imagesave.cpp \
+    tcp.cpp
 
 HEADERS += \
         mainwindow.h \
     serialport.h \
     imagedatamanage.h \
     main.h \
-    imagesave.h
+    imagesave.h \
+    tcp.h
 
 FORMS += \
         mainwindow.ui
