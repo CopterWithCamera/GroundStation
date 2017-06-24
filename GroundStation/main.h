@@ -19,4 +19,6 @@ extern bool flag_datatrans;
 extern bool flag_imagedisplay;
 extern bool flag_imagesave;
 
+extern double fps_receive;
+
 #endif // MAIN_H

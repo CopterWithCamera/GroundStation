@@ -11,6 +11,7 @@
 #include "tcp.h"
 #include "imagedatamanage.h"
 #include "imagesave.h"
+#include "measure.h"
 
 namespace Ui {
 class MainWindow;
@@ -55,8 +56,6 @@ private slots:
 
     void on_DataDisplay_Clear_clicked();
 
-    void Timer_Handler();
-
     void Plane_fps_Dis(double fps);
 
     void on_Button_Tcpconnnect_clicked();
@@ -68,6 +67,8 @@ private slots:
     void SerialPort_Connect_Ok_Slots();
     
     void SerialPort_Disconnect_Slots();
+
+    void Receive_fps_Dis(double fps);
 
 private:
     Ui::MainWindow *ui;
@@ -85,8 +86,8 @@ private:
     QThread MyImgSaveThread;
     ImageSave MyImgSave;
 
-    QTimer MyTimer;
-    double fps_receive;
+    QThread MyMeasureThread;
+    Measure MyMeasure;
 
 };
 

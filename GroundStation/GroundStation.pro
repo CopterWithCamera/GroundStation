@@ -33,7 +33,8 @@ SOURCES += \
     imagesave.cpp \
     tcp.cpp \
     mainwindow_serialport.cpp \
-    mainwindow_tcp.cpp
+    mainwindow_tcp.cpp \
+    measure.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     imagedatamanage.h \
     main.h \
     imagesave.h \
-    tcp.h
+    tcp.h \
+    measure.h
 
 FORMS += \
         mainwindow.ui

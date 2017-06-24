@@ -12,6 +12,8 @@ bool flag_datatrans = 0;
 bool flag_imagedisplay = 0;
 bool flag_imagesave = 0;
 
+double fps_receive = 0;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

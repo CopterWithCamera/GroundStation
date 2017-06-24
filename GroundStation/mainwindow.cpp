@@ -60,15 +60,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
     connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
-    //计算本地fps
-    fps_receive = 0;
-    //MyTimer.start(5000);    //5s一次的Timer
-    //connect(&MyTimer,QTimer::timeout,this,MainWindow::Timer_Handler);
+//***************** 把一些计算任务托管给线程 ******************************
+
+    MyMeasure.moveToThread(&MyMeasureThread);
+    MyMeasureThread.start();
+
+    connect(&MyMeasure,Measure::Reveive_Fps_Updata_Signals,this,MainWindow::Receive_fps_Dis);
 
 }
 
 MainWindow::~MainWindow()
 {
+    MyMeasureThread.quit();
+    MyMeasureThread.wait();
+
     MyComThread.quit();   //结束串口线程
     MyComThread.wait();   //等待线程完全结束
 
@@ -84,22 +89,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//用timer计算本地fps
-void MainWindow::Timer_Handler()
-{
-    fps_receive = fps_receive / 5.0;
-
-    QString str;
-    str.setNum(fps_receive,10,2);
-    ui->lineEdit_receivefps->setText(str);
-}
-
 //显示飞机端回传的fps
 void MainWindow::Plane_fps_Dis(double fps)
 {
     QString str;
     str.setNum(fps,10,2);
     ui->lineEdit_planefps->setText(str);
+}
+
+//显示本地接收到的fps
+void MainWindow::Receive_fps_Dis(double fps)
+{
+    QString str;
+    str.setNum(fps,10,2);
+    ui->lineEdit_receivefps->setText(str);
 }
 
 //字符串转16进制（处理字符串部分）
