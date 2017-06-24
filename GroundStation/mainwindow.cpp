@@ -18,6 +18,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //串口对外信号连接
     connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 
+//***************** 把Tcp端口托管给线程 *********************************
+    MyTcp.moveToThread(&MyTcpThread);
+    MyTcpThread.start();
+
+    connect(&MyTcp,tcp::Tcp_Connect_ok_Signals,this,MainWindow::Tcp_Connect_Ok_Slots);
+    connect(&MyTcp,tcp::Tcp_Disconnect_Signals,this,MainWindow::Tcp_Disconnect_Slots);
+
 //***************** 把图像处理函数托管给线程 ******************************
 
     MyImg.moveToThread(&MyImgThread);
@@ -47,12 +54,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
 
+    //计算本地fps
+    fps_receive = 0;
+    //MyTimer.start(5000);    //5s一次的Timer
+    //connect(&MyTimer,QTimer::timeout,this,MainWindow::Timer_Handler);
+
+    connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
+
 }
 
 MainWindow::~MainWindow()
 {
     MyComThread.quit();   //结束串口线程
     MyComThread.wait();   //等待线程完全结束
+
+    MyTcpThread.quit();
+    MyTcpThread.wait();
 
     MyImgThread.quit();
     MyImgThread.wait();
@@ -61,6 +78,24 @@ MainWindow::~MainWindow()
     MyImgSaveThread.wait();
 
     delete ui;
+}
+
+//用timer计算本地fps
+void MainWindow::Timer_Handler()
+{
+    fps_receive = fps_receive / 5.0;
+
+    QString str;
+    str.setNum(fps_receive,10,2);
+    ui->lineEdit_receivefps->setText(str);
+}
+
+//显示飞机端回传的fps
+void MainWindow::Plane_fps_Dis(double fps)
+{
+    QString str;
+    str.setNum(fps,10,2);
+    ui->lineEdit_planefps->setText(str);
 }
 
 //字符串转16进制（处理字符串部分）
@@ -149,6 +184,30 @@ void MainWindow::on_pushButton_OpenPort_clicked()
     }
 }
 
+void MainWindow::on_Button_Tcpconnnect_clicked()
+{
+    if(ui->Button_Tcpconnnect->text() == "连接")
+    {
+        QString IP = ui->LineEdit_IP->text();
+        QString Port = ui->LineEdit_port->text();
+        MyTcp.Tcp_Open(IP,Port);
+    }
+    else if(ui->Button_Tcpconnnect->text() == "断开连接")
+    {
+        MyTcp.Tcp_Close();
+    }
+}
+
+void MainWindow::Tcp_Connect_Ok_Slots()
+{
+    ui->Button_Tcpconnnect->setText("断开连接");
+}
+
+void MainWindow::Tcp_Disconnect_Slots()
+{
+    ui->Button_Tcpconnnect->setText("连接");
+}
+
 void MainWindow::on_DataDisplay_Clear_clicked()
 {
     ui->DataDisplay_ReceiveBox->clear();
@@ -190,6 +249,8 @@ void MainWindow::Display_on_DataDisplay_ReceiveBox(QByteArray data)
 //将数组中的图像显示在屏幕上
 void MainWindow::DisplayImage()
 {
+    fps_receive++;  //fps累加
+
     if(flag_imagedisplay)
         ui->label_image->setPixmap(QPixmap::fromImage(imgScaled)); //显示变换大小后的QImage对象
 }
@@ -230,23 +291,20 @@ void MainWindow::on_Button_numberclear_clicked()
 void MainWindow::on_Button_Closetrans_clicked()
 {
     flag_datatrans = 0;
-    //disconnect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 }
 
 void MainWindow::on_Button_Opentrans_clicked()
 {
     flag_datatrans = 1;
-    //connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
 }
 
 void MainWindow::on_Button_OpenImage_clicked()
 {
     flag_imagedisplay = 1;
-    //connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 }
 
 void MainWindow::on_Button_CloseImage_clicked()
 {
     flag_imagedisplay = 0;
-    //disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
 }
+

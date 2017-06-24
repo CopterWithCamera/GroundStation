@@ -5,9 +5,10 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += serialport
+QT       += network
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets \
-                                            serialport
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = GroundStation
 TEMPLATE = app

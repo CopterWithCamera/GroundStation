@@ -46,7 +46,7 @@
       </rect>
      </property>
      <property name="currentText">
-      <string>256000</string>
+      <string>115200</string>
      </property>
      <item>
       <property name="text">
@@ -259,7 +259,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>10.10.100.254</string>
+      <string>127.0.0.1</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="LineEdit_port">
@@ -371,6 +371,80 @@
      </property>
      <property name="text">
       <string>close</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="group_Paramenter">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>290</y>
+      <width>481</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Parameter</string>
+    </property>
+    <widget class="QLineEdit" name="lineEdit_receivefps">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>20</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_planefps">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>50</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_receivefps">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>54</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>本地fps：</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_planefps">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>54</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>机载fps：</string>
      </property>
     </widget>
    </widget>

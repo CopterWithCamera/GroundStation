@@ -129,6 +129,7 @@ void SerialPort::Data_analysis()
         tmp = Out_Of_Port_Buff[i];
 
         Byte_Handle_Image(tmp);
+        Byte_Handle_Fps(tmp);
     }
 }
 
@@ -146,7 +147,7 @@ void SerialPort::Byte_Handle_Image(unsigned char data)
     case 1:
         if(data == 0xFE)    //必须连续接入包头2
             mycase = 2;
-        else if(data = 0x01)    //否则包头无效
+        else if(data = 0x01)    //防止包头包尾相接
             mycase = 1;
         else
             mycase = 0;
@@ -177,3 +178,56 @@ void SerialPort::Byte_Handle_Image(unsigned char data)
         break;
     }
 }
+
+void SerialPort::Byte_Handle_Fps(unsigned char data)
+{
+    static int mycase = 0;
+    static int counter = 0; //记录一个包里面的数据位数
+    static unsigned char a[4];
+
+    switch(mycase)
+    {
+    case 0:
+        if(data == 0x04)    //包头4
+            mycase = 1;
+        break;
+    case 1:
+        if(data == 0xFB)    //必须连续接入包头2
+            mycase = 2;
+        else if(data = 0x04)    //防止包头包尾相接
+            mycase = 1;
+        else
+            mycase = 0;
+        break;
+    case 2:                 //解包
+        a[counter] = data;  //数据存入数组中
+        counter++;  //计数累加
+        if(counter >=  4) //按照帧长度收满一帧，开始检查包尾
+        {
+            counter = 0;
+            mycase = 3;
+        }
+        break;
+    case 3:
+        if(data == 0xFB)    //验证包尾
+            mycase = 4;
+        else
+            mycase = 0;
+        break;
+    case 4:
+        if(data == 0x04)    //包尾验证通过，可以采纳数据
+        {
+            float tmp;
+            float *mp = (float*)a;
+
+            tmp = *mp;
+
+            emit SerialPort_Get_Fps_Signals(tmp);    //发出图像信号
+        }
+        mycase = 0;   //接收状态都是要归零的
+        break;
+    default:
+        break;
+    }
+}
+

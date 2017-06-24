@@ -5,12 +5,11 @@
 #include <QThread>
 #include <QTimer>
 #include <QDebug>
-#include "serialport.h"
-#include "imagedatamanage.h"
 
 #include "main.h"
-#include "ui_disimage.h"
-#include "imagedialog.h"
+#include "serialport.h"
+#include "tcp.h"
+#include "imagedatamanage.h"
 #include "imagesave.h"
 
 namespace Ui {
@@ -56,6 +55,16 @@ private slots:
 
     void on_DataDisplay_Clear_clicked();
 
+    void Timer_Handler();
+
+    void Plane_fps_Dis(double fps);
+
+    void on_Button_Tcpconnnect_clicked();
+
+    void Tcp_Connect_Ok_Slots();
+
+    void Tcp_Disconnect_Slots();
+
 private:
     Ui::MainWindow *ui;
 
@@ -63,11 +72,17 @@ private:
     QThread MyComThread;
     SerialPort MyCom;
 
+    QThread MyTcpThread;
+    tcp MyTcp;
+
     QThread MyImgThread;
     imagedatamanage MyImg;
 
     QThread MyImgSaveThread;
     ImageSave MyImgSave;
+
+    QTimer MyTimer;
+    double fps_receive;
 
 };
 

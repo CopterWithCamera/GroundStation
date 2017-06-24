@@ -26,17 +26,19 @@ public:
 signals:
     void SerialPort_Out_Of_Port_Data_Signals(QByteArray data);  //对外直接传送数据
     void SerialPort_Get_Image_Signals();
+    void SerialPort_Get_Fps_Signals(double fps);
 
     void Send_To_Port_Signals();  //内部信号
 
 private slots:
-    void Get_From_Port(); //内部从port介绍数据（只作为内部转接用）
+    void Get_From_Port(); //内部从port接收数据（只作为内部转接用）
 
 private:
     void Send_To_Port();  //内部发送数据给Port的函数
 
     void Data_analysis();
     void Byte_Handle_Image(unsigned char data); //用于识别图像数据包
+    void Byte_Handle_Fps(unsigned char data);
 
     //缓存数据的Buff
     QByteArray Out_Of_Port_Buff;
