@@ -65,6 +65,10 @@ private slots:
 
     void Tcp_Disconnect_Slots();
 
+    void SerialPort_Connect_Ok_Slots();
+    
+    void SerialPort_Disconnect_Slots();
+
 private:
     Ui::MainWindow *ui;
 

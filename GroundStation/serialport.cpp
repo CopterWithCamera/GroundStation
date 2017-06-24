@@ -4,6 +4,9 @@ SerialPort::SerialPort(QObject *parent) : QObject(parent)
 {
     //初始化串口指针
     port = NULL;
+
+    connect(this,SerialPort_Open_Signals,this,SerialPort_Open_Slots);
+    connect(this,SerialPort_Close_Signals,this,SerialPort_Close_Slots);
 }
 
 //获取串口列表
@@ -24,14 +27,19 @@ QStringList SerialPort::SerialPort_Get_Port_List()
 }
 
 //打开串口
-bool SerialPort::SerialPort_Open(QString PortName,int Baud)
+void SerialPort::SerialPort_Open(QString PortName,int Baud)
+{
+    emit SerialPort_Open_Signals(PortName,Baud);
+}
+
+void SerialPort::SerialPort_Open_Slots(QString PortName,int Baud)
 {
     //port是Qt串口类对象指针
 
     //检查是否已经打开
     if(port != NULL)
     {
-        return false;
+        return;
     }
 
     //创建串口实例
@@ -45,7 +53,7 @@ bool SerialPort::SerialPort_Open(QString PortName,int Baud)
     {
         delete port;
         port = NULL;
-        return false;
+        return;
     }
 
     //设置波特率
@@ -67,15 +75,22 @@ bool SerialPort::SerialPort_Open(QString PortName,int Baud)
     connect(port, &QSerialPort::readyRead, this, &SerialPort::Get_From_Port);
     connect(this,SerialPort::Send_To_Port_Signals,this,SerialPort::Send_To_Port);
 
-    return true;
+    emit SerialPort_Connect_Ok_Signals();
+
+    return;
 }
 
 //关闭串口
-bool SerialPort::SerialPort_Close()
+void SerialPort::SerialPort_Close()
+{
+    emit SerialPort_Close_Signals();
+}
+
+void SerialPort::SerialPort_Close_Slots()
 {
     //检查是否已经关闭
     if(!port->isOpen())
-        return false;
+        return;
 
     disconnect(this,SerialPort::Send_To_Port_Signals,this,SerialPort::Send_To_Port);
 
@@ -85,7 +100,7 @@ bool SerialPort::SerialPort_Close()
     port->deleteLater();
     port = NULL;
 
-    return true;
+    emit SerialPort_Disconnect_Signals();
 }
 
 //程序向串口发送数据

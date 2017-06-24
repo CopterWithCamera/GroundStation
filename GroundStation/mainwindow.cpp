@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //串口对外信号连接
     connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,MainWindow::Display_on_DataDisplay_ReceiveBox);
 
+    connect(&MyCom,SerialPort::SerialPort_Connect_Ok_Signals,this,MainWindow::SerialPort_Connect_Ok_Slots);
+    connect(&MyCom,SerialPort::SerialPort_Disconnect_Signals,this,MainWindow::SerialPort_Disconnect_Slots);
+
 //***************** 把Tcp端口托管给线程 *********************************
     MyTcp.moveToThread(&MyTcpThread);
     MyTcpThread.start();
@@ -55,13 +58,12 @@ MainWindow::MainWindow(QWidget *parent) :
     MyImgSaveThread.start();
 
     connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
+    connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
     //计算本地fps
     fps_receive = 0;
     //MyTimer.start(5000);    //5s一次的Timer
     //connect(&MyTimer,QTimer::timeout,this,MainWindow::Timer_Handler);
-
-    connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
 }
 
@@ -151,63 +153,6 @@ char MainWindow::ConvertHexChar(char ch)
     else if((ch >= 'a') && (ch <= 'f'))
         return ch-'a'+10;
     else return ch-ch;//不在0-f范围内的会发送成0
-}
-
-void MainWindow::on_pushButton_GetPort_clicked()
-{
-    ui->comboBox_PortName->clear();
-    ui->comboBox_PortName->addItems(MyCom.SerialPort_Get_Port_List());
-}
-
-void MainWindow::on_pushButton_OpenPort_clicked()
-{
-    if(ui->pushButton_OpenPort->text() == "打开串口")
-    {
-        QString PortName = ui->comboBox_PortName->currentText();
-        int Baud = ui->comboBox_BaudRate->currentText().toInt();
-
-        if(MyCom.SerialPort_Open(PortName,Baud))
-        {
-            ui->pushButton_OpenPort->setText("关闭串口");
-            ui->comboBox_BaudRate->setEnabled(false);
-            ui->comboBox_PortName->setEnabled(false);
-            qDebug() << "串口打开成功，串口号：" << PortName << "，波特率：" << Baud;
-        }
-    }
-    else
-    {
-        if(MyCom.SerialPort_Close())
-        {
-            ui->pushButton_OpenPort->setText("打开串口");
-            ui->comboBox_BaudRate->setEnabled(true);
-            ui->comboBox_PortName->setEnabled(true);
-            qDebug() << "关闭串口成功";
-        }
-    }
-}
-
-void MainWindow::on_Button_Tcpconnnect_clicked()
-{
-    if(ui->Button_Tcpconnnect->text() == "连接")
-    {
-        QString IP = ui->LineEdit_IP->text();
-        QString Port = ui->LineEdit_port->text();
-        MyTcp.Tcp_Open(IP,Port);
-    }
-    else if(ui->Button_Tcpconnnect->text() == "断开连接")
-    {
-        MyTcp.Tcp_Close();
-    }
-}
-
-void MainWindow::Tcp_Connect_Ok_Slots()
-{
-    ui->Button_Tcpconnnect->setText("断开连接");
-}
-
-void MainWindow::Tcp_Disconnect_Slots()
-{
-    ui->Button_Tcpconnnect->setText("连接");
 }
 
 void MainWindow::on_DataDisplay_Clear_clicked()

@@ -31,7 +31,9 @@ SOURCES += \
     serialport.cpp \
     imagedatamanage.cpp \
     imagesave.cpp \
-    tcp.cpp
+    tcp.cpp \
+    mainwindow_serialport.cpp \
+    mainwindow_tcp.cpp
 
 HEADERS += \
         mainwindow.h \

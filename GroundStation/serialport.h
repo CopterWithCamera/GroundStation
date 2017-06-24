@@ -16,8 +16,8 @@ public:
     explicit SerialPort(QObject *parent = nullptr);
 
     QStringList SerialPort_Get_Port_List();  //返回可用串口QList
-    bool SerialPort_Open(QString PortName, int Baud);
-    bool SerialPort_Close();
+    void SerialPort_Open(QString PortName, int Baud);
+    void SerialPort_Close();
 
     //对外的收发函数
     QByteArray SerialPort_Out_Of_Port();          //供外部调用的读取数据的方法
@@ -28,10 +28,18 @@ signals:
     void SerialPort_Get_Image_Signals();
     void SerialPort_Get_Fps_Signals(double fps);
 
+    void SerialPort_Connect_Ok_Signals();
+    void SerialPort_Disconnect_Signals();
+
     void Send_To_Port_Signals();  //内部信号
+    void SerialPort_Open_Signals(QString PortName,int Baud);
+    void SerialPort_Close_Signals();
 
 private slots:
     void Get_From_Port(); //内部从port接收数据（只作为内部转接用）
+
+    void SerialPort_Open_Slots(QString PortName,int Baud);
+    void SerialPort_Close_Slots();
 
 private:
     void Send_To_Port();  //内部发送数据给Port的函数
