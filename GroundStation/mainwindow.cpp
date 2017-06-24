@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //对外信号连接
     connect(&MyCom,SerialPort::SerialPort_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
+    connect(&MyTcp,tcp::Tcp_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
 
     //显示默认文件路径
     ui->lineEdit_filepath->setText(file_path);
@@ -59,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
     connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
+    connect(&MyTcp,tcp::Tcp_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
 //***************** 把一些计算任务托管给线程 ******************************
 
