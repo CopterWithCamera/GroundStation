@@ -17,7 +17,10 @@ public:
     void Tcp_Open(QString tcpIp,QString tcpPort);
     void Tcp_Close();
 
+    QByteArray Tcp_Out_Of_Tcp();          //供外部调用的读取数据的方法
     void Tcp_In_To_Tcp(QByteArray data);
+
+
 
 signals:
     void Tcp_Connect_ok_Signals();

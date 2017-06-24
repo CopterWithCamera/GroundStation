@@ -65,6 +65,7 @@ bool SerialPort::SerialPort_Open(QString PortName,int Baud)
 
     //连接槽函数（由于串口对象是临时创建的，所以槽函数要临时连接）
     connect(port, &QSerialPort::readyRead, this, &SerialPort::Get_From_Port);
+    connect(this,SerialPort::Send_To_Port_Signals,this,SerialPort::Send_To_Port);
 
     return true;
 }
@@ -75,6 +76,8 @@ bool SerialPort::SerialPort_Close()
     //检查是否已经关闭
     if(!port->isOpen())
         return false;
+
+    disconnect(this,SerialPort::Send_To_Port_Signals,this,SerialPort::Send_To_Port);
 
     //关闭串口
     port->clear();

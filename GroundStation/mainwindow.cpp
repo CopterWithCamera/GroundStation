@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBox_PortName->addItems(MyCom.SerialPort_Get_Port_List());
 
     //串口对外信号连接
-    connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,Display_on_DataDisplay_ReceiveBox);
+    connect(&MyCom,SerialPort::SerialPort_Out_Of_Port_Data_Signals,this,MainWindow::Display_on_DataDisplay_ReceiveBox);
 
 //***************** 把Tcp端口托管给线程 *********************************
     MyTcp.moveToThread(&MyTcpThread);
@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&MyTcp,tcp::Tcp_Connect_ok_Signals,this,MainWindow::Tcp_Connect_Ok_Slots);
     connect(&MyTcp,tcp::Tcp_Disconnect_Signals,this,MainWindow::Tcp_Disconnect_Slots);
+
+    connect(&MyTcp,tcp::Tcp_Out_Of_Tcp_Data_Signals,this,MainWindow::Display_on_DataDisplay_ReceiveBox);
 
 //***************** 把图像处理函数托管给线程 ******************************
 
@@ -216,9 +218,23 @@ void MainWindow::on_DataDisplay_Clear_clicked()
 void MainWindow::on_DataDisplay_Send_clicked()
 {
     QString str = ui->DataDisplay_SendBox->text();//从LineEdit得到字符串
+
+    //删除空格
+    str.remove(QChar(' '), Qt::CaseSensitive);
+
     QByteArray tmp = str.toLatin1();
 
-    MyCom.SerialPort_In_To_Port(tmp);
+    //将str转换为16进制数，存入data
+    int len = tmp.length();
+    if(len%2 == 1)   //如果发送的数据个数为奇数的，则在前面最后落单的字符前添加一个字符0
+    {
+        tmp = tmp.insert(len-1,'0'); //insert(int position, const QString & str)
+    }
+    QByteArray data;
+    StringToHex(tmp,data);//将str字符串转换为16进制的形式
+
+    MyCom.SerialPort_In_To_Port(data);
+    MyTcp.Tcp_In_To_Tcp(data);
 }
 
 void MainWindow::Display_on_DataDisplay_ReceiveBox(QByteArray data)

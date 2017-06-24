@@ -55,7 +55,7 @@ void tcp::connectUpdata()
     connect(tcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(ErrorHandle(QAbstractSocket::SocketError)));
 
     //从外部接到信息
-    connect(this,tcp::Get_From_Port,this,tcp::Send_To_Tcp);
+    connect(this,tcp::Send_To_Tcp_Signals,this,tcp::Send_To_Tcp);
 }
 
 void tcp::Tcp_Close_Slots()
@@ -65,7 +65,7 @@ void tcp::Tcp_Close_Slots()
     if(tcpSocket == NULL)
         return;
 
-    //disconnect(this,tcp::Get_From_Port,this,tcp::Send_To_Tcp);
+    disconnect(this,tcp::Send_To_Tcp_Signals,this,tcp::Send_To_Tcp);    //断开内部对程序向Tcp发送的响应
 
     tcpSocket->abort();
     tcpSocket->deleteLater();   //这个删除方式更温和一些
@@ -91,7 +91,7 @@ void tcp::Get_From_Port()
     if(!buf.isEmpty())
     {
         Out_Of_Tcp_Buff = buf;
-        //Data_analysis();
+        Data_analysis();
         emit Tcp_Out_Of_Tcp_Data_Signals(Out_Of_Tcp_Buff);
     }
 }
