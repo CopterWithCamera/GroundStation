@@ -46,13 +46,7 @@ private slots:
 
     void DisplayImage();
 
-    void on_Button_Closetrans_clicked();
-
-    void on_Button_Opentrans_clicked();
-
-    void on_Button_OpenImage_clicked();
-
-    void on_Button_CloseImage_clicked();
+    void DisplayResult();
 
     void on_DataDisplay_Clear_clicked();
 
@@ -69,6 +63,12 @@ private slots:
     void SerialPort_Disconnect_Slots();
 
     void Receive_fps_Dis(double fps);
+
+    void on_checkBox_image_stateChanged(int arg1);
+
+    void on_checkBox_result_stateChanged(int arg1);
+
+    void on_checkBox_datatrans_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

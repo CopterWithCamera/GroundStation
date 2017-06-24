@@ -16,9 +16,10 @@ public:
 
 signals:
     void Image_Ok_Signals();
-    void DisImage_Ok_Signals();
+    void Result_Ok_Signals();
 public slots:
     void Image_Generate();
+    void Result_Generate();
 
 };
 

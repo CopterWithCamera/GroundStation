@@ -26,6 +26,7 @@ public:
 signals:
     void SerialPort_Out_Of_Port_Data_Signals(QByteArray data);  //对外直接传送数据
     void SerialPort_Get_Image_Signals();
+    void SerialPort_Get_Result_Signals();
     void SerialPort_Get_Fps_Signals(double fps);
 
     void SerialPort_Connect_Ok_Signals();
@@ -46,6 +47,7 @@ private:
 
     void Data_analysis();
     void Byte_Handle_Image(unsigned char data); //用于识别图像数据包
+    void Byte_Handle_Result(unsigned char data);
     void Byte_Handle_Fps(unsigned char data);
 
     //缓存数据的Buff

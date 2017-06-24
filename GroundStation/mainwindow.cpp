@@ -37,10 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //对外信号连接
     connect(&MyCom,SerialPort::SerialPort_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
+    connect(&MyCom,SerialPort::SerialPort_Get_Result_Signals,&MyImg,imagedatamanage::Result_Generate);
     connect(&MyTcp,tcp::Tcp_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
-
-    //显示默认文件路径
-    ui->lineEdit_filepath->setText(file_path);
+    connect(&MyTcp,tcp::Tcp_Get_Result_Signals,&MyImg,imagedatamanage::Result_Generate);
 
     //初始化图像数组并显示图像
     for(int i=0;i<Img_Size;i++)
@@ -50,17 +49,27 @@ MainWindow::MainWindow(QWidget *parent) :
     MyImg.Image_Generate();
     DisplayImage();
 
+    for(int i=0;i<Img_Size;i++)
+    {
+        ResultTmpArray[i] = 0xFF;
+    }
+    MyImg.Result_Generate();
+    DisplayResult();
+
+
     //默认不开启图像显示
     connect(&MyImg,imagedatamanage::Image_Ok_Signals,this,MainWindow::DisplayImage);
+    connect(&MyImg,imagedatamanage::Result_Ok_Signals,this,MainWindow::DisplayResult);
 
-//***************** 把图像处理函数托管给线程 ******************************
+//***************** 把图像存储托管给线程 ******************************
+
+    //显示默认文件路径
+    ui->lineEdit_filepath->setText(file_path);
 
     MyImgSave.moveToThread(&MyImgSaveThread);
     MyImgSaveThread.start();
 
     connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
-    connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
-    connect(&MyTcp,tcp::Tcp_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
 //***************** 把一些计算任务托管给线程 ******************************
 
@@ -68,6 +77,11 @@ MainWindow::MainWindow(QWidget *parent) :
     MyMeasureThread.start();
 
     connect(&MyMeasure,Measure::Reveive_Fps_Updata_Signals,this,MainWindow::Receive_fps_Dis);
+
+//***************** 一些其余的操作 **************************************
+
+    connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
+    connect(&MyTcp,tcp::Tcp_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
 }
 
@@ -221,6 +235,12 @@ void MainWindow::DisplayImage()
         ui->label_image->setPixmap(QPixmap::fromImage(imgScaled)); //显示变换大小后的QImage对象
 }
 
+void MainWindow::DisplayResult()
+{
+    if(flag_resultdisplay)
+        ui->label_result->setPixmap(QPixmap::fromImage(ResScaled)); //显示变换大小后的QImage对象
+}
+
 void MainWindow::on_Button_pathchange_clicked()
 {
     QString file_path_tmp = QFileDialog::getExistingDirectory(this,"请选择数据保存文件夹","./");
@@ -254,23 +274,17 @@ void MainWindow::on_Button_numberclear_clicked()
     MyImgSave.image_counter = 0;
 }
 
-void MainWindow::on_Button_Closetrans_clicked()
+void MainWindow::on_checkBox_image_stateChanged(int arg1)
 {
-    flag_datatrans = 0;
+    flag_imagedisplay = (bool)arg1;
 }
 
-void MainWindow::on_Button_Opentrans_clicked()
+void MainWindow::on_checkBox_result_stateChanged(int arg1)
 {
-    flag_datatrans = 1;
+    flag_resultdisplay = (bool)arg1;
 }
 
-void MainWindow::on_Button_OpenImage_clicked()
+void MainWindow::on_checkBox_datatrans_stateChanged(int arg1)
 {
-    flag_imagedisplay = 1;
+    flag_datatrans = (bool)arg1;
 }
-
-void MainWindow::on_Button_CloseImage_clicked()
-{
-    flag_imagedisplay = 0;
-}
-

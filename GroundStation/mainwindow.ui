@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>895</width>
-    <height>483</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>GroundStation</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QGroupBox" name="group_SerialPort">
@@ -104,9 +104,9 @@
    <widget class="QGroupBox" name="group_SaveImage">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>630</x>
       <y>390</y>
-      <width>871</width>
+      <width>251</width>
       <height>81</height>
      </rect>
     </property>
@@ -116,7 +116,7 @@
     <widget class="QCheckBox" name="checkBox_imagesave">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>100</x>
        <y>50</y>
        <width>71</width>
        <height>21</height>
@@ -129,7 +129,7 @@
     <widget class="QPushButton" name="Button_numberclear">
      <property name="geometry">
       <rect>
-       <x>790</x>
+       <x>170</x>
        <y>50</y>
        <width>71</width>
        <height>23</height>
@@ -144,7 +144,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>851</width>
+       <width>231</width>
        <height>20</height>
       </rect>
      </property>
@@ -210,30 +210,17 @@
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="Button_OpenImage">
+    <widget class="QCheckBox" name="checkBox_image">
      <property name="geometry">
       <rect>
        <x>420</x>
        <y>20</y>
        <width>51</width>
-       <height>23</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>open</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Button_CloseImage">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
-       <y>50</y>
-       <width>51</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>close</string>
+      <string>Show</string>
      </property>
     </widget>
    </widget>
@@ -347,39 +334,26 @@
       <string>send</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="Button_Opentrans">
+    <widget class="QCheckBox" name="checkBox_datatrans">
      <property name="geometry">
       <rect>
        <x>190</x>
        <y>20</y>
        <width>51</width>
-       <height>23</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>open</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Button_Closetrans">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>50</y>
-       <width>51</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>close</string>
+      <string>Show</string>
      </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="group_Paramenter">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>630</x>
       <y>290</y>
-      <width>481</width>
+      <width>251</width>
       <height>81</height>
      </rect>
     </property>
@@ -445,6 +419,61 @@
      </property>
      <property name="text">
       <string>机载fps：</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="group_Result">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>290</y>
+      <width>481</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+     border-width: 1px;
+     border-style: solid;
+     border-color: rgb(255, 170, 0);
+}
+</string>
+    </property>
+    <property name="title">
+     <string>Result</string>
+    </property>
+    <widget class="QLabel" name="label_result">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>400</width>
+       <height>240</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+     border-width: 1px;
+     border-style: solid;
+     border-color: rgb(120, 120, 120);
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_result">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>20</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show</string>
      </property>
     </widget>
    </widget>

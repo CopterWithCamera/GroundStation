@@ -28,6 +28,7 @@ signals:
 
     void Tcp_Out_Of_Tcp_Data_Signals(QByteArray data); //TCP端口接到的数据向程序发送
     void Tcp_Get_Image_Signals();
+    void Tcp_Get_Result_Signals();
     void Tcp_Get_Fps_Signals(float fps);
 
     void Send_To_Tcp_Signals();  //内部信号
@@ -50,6 +51,7 @@ private:
 
     void Data_analysis();
     void Byte_Handle_Image(unsigned char data);
+    void Byte_Handle_Result(unsigned char data);
     void Byte_Handle_Fps(unsigned char data);
 
     QTcpSocket *tcpSocket;//直接建立TCP套接字类
