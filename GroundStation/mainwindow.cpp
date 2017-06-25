@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //***************** 一些其余的操作 **************************************
 
     connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
+    connect(&MyCom,SerialPort::SerialPort_Get_Mode_Signals,this,MainWindow::Plane_mode_Dis);
     connect(&MyTcp,tcp::Tcp_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
 }
@@ -103,6 +104,14 @@ MainWindow::~MainWindow()
     MyImgSaveThread.wait();
 
     delete ui;
+}
+
+void MainWindow::Plane_mode_Dis(unsigned char mode)
+{
+    int a = mode;
+    QString str;
+    str.setNum(a,10);
+    ui->lineEdit_mode->setText(str);
 }
 
 //显示飞机端回传的fps

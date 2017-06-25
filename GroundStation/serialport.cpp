@@ -149,6 +149,7 @@ void SerialPort::Data_analysis()
         Byte_Handle_Image(tmp);
         Byte_Handle_Result(tmp);
         Byte_Handle_Fps(tmp);
+        Byte_Handle_Mode(tmp);
     }
 }
 
@@ -296,3 +297,43 @@ void SerialPort::Byte_Handle_Fps(unsigned char data)
     }
 }
 
+void SerialPort::Byte_Handle_Mode(unsigned char data)
+{
+    static int mycase = 0;
+    static unsigned char a;
+
+    switch(mycase)
+    {
+    case 0:
+        if(data == 0x05)    //包头4
+            mycase = 1;
+        break;
+    case 1:
+        if(data == 0xFA)    //必须连续接入包头2
+            mycase = 2;
+        else if(data == 0x05)    //防止包头包尾相接
+            mycase = 1;
+        else
+            mycase = 0;
+        break;
+    case 2:                 //解包
+        a = data;  //数据存入数组中
+        mycase = 3;
+        break;
+    case 3:
+        if(data == 0xFA)    //验证包尾
+            mycase = 4;
+        else
+            mycase = 0;
+        break;
+    case 4:
+        if(data == 0x05)    //包尾验证通过，可以采纳数据
+        {
+            emit SerialPort_Get_Mode_Signals(a);    //发出信号
+        }
+        mycase = 0;   //接收状态都是要归零的
+        break;
+    default:
+        break;
+    }
+}

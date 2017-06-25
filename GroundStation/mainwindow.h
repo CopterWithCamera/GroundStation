@@ -52,6 +52,8 @@ private slots:
 
     void Plane_fps_Dis(double fps);
 
+    void Plane_mode_Dis(unsigned char mode);
+
     void on_Button_Tcpconnnect_clicked();
 
     void Tcp_Connect_Ok_Slots();
