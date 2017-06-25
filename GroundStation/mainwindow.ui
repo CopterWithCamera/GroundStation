@@ -106,7 +106,7 @@
      <rect>
       <x>630</x>
       <y>390</y>
-      <width>251</width>
+      <width>301</width>
       <height>81</height>
      </rect>
     </property>
@@ -116,7 +116,7 @@
     <widget class="QCheckBox" name="checkBox_imagesave">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>150</x>
        <y>50</y>
        <width>71</width>
        <height>21</height>
@@ -129,7 +129,7 @@
     <widget class="QPushButton" name="Button_numberclear">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>220</x>
        <y>50</y>
        <width>71</width>
        <height>23</height>
@@ -144,7 +144,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>231</width>
+       <width>281</width>
        <height>20</height>
       </rect>
      </property>
@@ -405,19 +405,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="group_Command">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>290</y>
-      <width>120</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Command</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
@@ -503,7 +490,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="tab_Datatrans">
      <attribute name="title">
       <string>Datatrans</string>
      </attribute>
@@ -588,7 +575,6 @@
    <zorder>group_Tcp</zorder>
    <zorder>group_Paramenter</zorder>
    <zorder>group_Result</zorder>
-   <zorder>group_Command</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
