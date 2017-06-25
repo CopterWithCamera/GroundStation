@@ -255,23 +255,14 @@ void MainWindow::on_Button_pathchange_clicked()
     }
 }
 
-void MainWindow::on_checkBox_imagesave_stateChanged(int arg1)
-{
-    if(arg1)
-    {
-        flag_imagesave = 1;
-        //connect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
-    }
-    else
-    {
-        flag_imagesave = 0;
-        //disconnect(&MyImg,imagedatamanage::Image_Ok_Signals,&MyImgSave,ImageSave::Image_Save);
-    }
-}
-
 void MainWindow::on_Button_numberclear_clicked()
 {
     MyImgSave.image_counter = 0;
+}
+
+void MainWindow::on_checkBox_imagesave_stateChanged(int arg1)
+{
+    flag_imagesave = (bool)arg1;
 }
 
 void MainWindow::on_checkBox_image_stateChanged(int arg1)
@@ -288,3 +279,4 @@ void MainWindow::on_checkBox_datatrans_stateChanged(int arg1)
 {
     flag_datatrans = (bool)arg1;
 }
+

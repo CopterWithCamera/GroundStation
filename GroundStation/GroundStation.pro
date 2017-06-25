@@ -34,7 +34,8 @@ SOURCES += \
     tcp.cpp \
     mainwindow_serialport.cpp \
     mainwindow_tcp.cpp \
-    measure.cpp
+    measure.cpp \
+    mainwindow_command.cpp
 
 HEADERS += \
         mainwindow.h \

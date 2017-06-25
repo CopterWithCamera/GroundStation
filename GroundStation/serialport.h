@@ -21,7 +21,7 @@ public:
 
     //对外的收发函数
     QByteArray SerialPort_Out_Of_Port();          //供外部调用的读取数据的方法
-    void SerialPort_In_To_Port(QByteArray data);           //从外部接收数据的方法
+    void SerialPort_In_To_Port(QByteArray data);           //从外部接收数据发送给COM的方法
 
 signals:
     void SerialPort_Out_Of_Port_Data_Signals(QByteArray data);  //对外直接传送数据

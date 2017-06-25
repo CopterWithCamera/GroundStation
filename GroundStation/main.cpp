@@ -20,7 +20,7 @@ bool flag_imagedisplay = 0;
 bool flag_resultdisplay = 0;
 bool flag_imagesave = 0;
 
-double fps_receive = 0;
+double fps_receive = -1;
 
 int main(int argc, char *argv[])
 {
