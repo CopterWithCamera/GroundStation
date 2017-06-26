@@ -115,11 +115,15 @@ void MainWindow::Plane_mode_Dis(unsigned char mode)
 }
 
 //显示飞机端回传的fps
+extern float processing_fps;
 void MainWindow::Plane_fps_Dis(double fps)
 {
     QString str;
     str.setNum(fps,10,2);
     ui->lineEdit_planefps->setText(str);
+
+    str.setNum(processing_fps,10,2);
+    ui->lineEdit_processing_fps->setText(str);
 }
 
 //显示本地接收到的fps

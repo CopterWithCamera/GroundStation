@@ -105,7 +105,7 @@
     <property name="geometry">
      <rect>
       <x>630</x>
-      <y>390</y>
+      <y>410</y>
       <width>301</width>
       <height>81</height>
      </rect>
@@ -282,7 +282,7 @@
       <x>630</x>
       <y>290</y>
       <width>301</width>
-      <height>81</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="title">
@@ -376,6 +376,38 @@
      </property>
      <property name="text">
       <string>传输模式：</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_processing_fps">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>80</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_processing_fps">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>54</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>运算fps：</string>
      </property>
     </widget>
    </widget>

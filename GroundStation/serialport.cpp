@@ -245,11 +245,12 @@ void SerialPort::Byte_Handle_Result(unsigned char data)
     }
 }
 
+float processing_fps = 0;
 void SerialPort::Byte_Handle_Fps(unsigned char data)
 {
     static int mycase = 0;
     static int counter = 0; //记录一个包里面的数据位数
-    static unsigned char a[4];
+    static unsigned char a[8];
 
     switch(mycase)
     {
@@ -268,7 +269,7 @@ void SerialPort::Byte_Handle_Fps(unsigned char data)
     case 2:                 //解包
         a[counter] = data;  //数据存入数组中
         counter++;  //计数累加
-        if(counter >=  4) //按照帧长度收满一帧，开始检查包尾
+        if(counter >=  8) //按照帧长度收满一帧，开始检查包尾
         {
             counter = 0;
             mycase = 3;
@@ -283,12 +284,17 @@ void SerialPort::Byte_Handle_Fps(unsigned char data)
     case 4:
         if(data == 0x04)    //包尾验证通过，可以采纳数据
         {
-            float tmp;
+            float tmp1,tmp2;
             float *mp = (float*)a;
 
-            tmp = *mp;
+            tmp1 = *mp;
 
-            emit SerialPort_Get_Fps_Signals(tmp);    //发出图像信号
+            mp = (float*)a + 4;    //数组里面后4字节
+
+            tmp2 = *mp;
+
+            emit SerialPort_Get_Fps_Signals(tmp1);    //发出信号
+            processing_fps = tmp2;
         }
         mycase = 0;   //接收状态都是要归零的
         break;
