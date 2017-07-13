@@ -285,13 +285,14 @@ void SerialPort::Byte_Handle_Fps(unsigned char data)
         if(data == 0x04)    //包尾验证通过，可以采纳数据
         {
             float tmp1,tmp2;
-            float *mp = (float*)a;
+            float *mp1,*mp2;
+            unsigned char * b = &(a[4]);
 
-            tmp1 = *mp;
+            mp1 = (float*)a;
+            mp2 = (float*)b;
 
-            mp = (float*)a + 4;    //数组里面后4字节
-
-            tmp2 = *mp;
+            tmp1 = *mp1;
+            tmp2 = *mp2;
 
             emit SerialPort_Get_Fps_Signals(tmp1);    //发出信号
             processing_fps = tmp2;
