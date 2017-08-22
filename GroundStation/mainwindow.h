@@ -54,11 +54,11 @@ private slots:
 
     void Plane_mode_Dis(unsigned char mode);
 
-    void on_Button_Tcpconnnect_clicked();
+//    void on_Button_Tcpconnnect_clicked();
 
-    void Tcp_Connect_Ok_Slots();
+//    void Tcp_Connect_Ok_Slots();
 
-    void Tcp_Disconnect_Slots();
+//    void Tcp_Disconnect_Slots();
 
     void SerialPort_Connect_Ok_Slots();
     
@@ -81,8 +81,8 @@ private:
     QThread MyComThread;
     SerialPort MyCom;
 
-    QThread MyTcpThread;
-    tcp MyTcp;
+//    QThread MyTcpThread;
+//    tcp MyTcp;
 
     QThread MyImgThread;
     imagedatamanage MyImg;

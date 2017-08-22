@@ -22,13 +22,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&MyCom,SerialPort::SerialPort_Disconnect_Signals,this,MainWindow::SerialPort_Disconnect_Slots);
 
 //***************** 把Tcp端口托管给线程 *********************************
-    MyTcp.moveToThread(&MyTcpThread);
-    MyTcpThread.start();
+//    MyTcp.moveToThread(&MyTcpThread);
+//    MyTcpThread.start();
 
 //    connect(&MyTcp,tcp::Tcp_Connect_ok_Signals,this,MainWindow::Tcp_Connect_Ok_Slots);
 //    connect(&MyTcp,tcp::Tcp_Disconnect_Signals,this,MainWindow::Tcp_Disconnect_Slots);
 
-    connect(&MyTcp,tcp::Tcp_Out_Of_Tcp_Data_Signals,this,MainWindow::Display_on_DataDisplay_ReceiveBox);
+//    connect(&MyTcp,tcp::Tcp_Out_Of_Tcp_Data_Signals,this,MainWindow::Display_on_DataDisplay_ReceiveBox);
 
 //***************** 把图像处理函数托管给线程 ******************************
 
@@ -38,8 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //对外信号连接
     connect(&MyCom,SerialPort::SerialPort_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
     connect(&MyCom,SerialPort::SerialPort_Get_Result_Signals,&MyImg,imagedatamanage::Result_Generate);
-    connect(&MyTcp,tcp::Tcp_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
-    connect(&MyTcp,tcp::Tcp_Get_Result_Signals,&MyImg,imagedatamanage::Result_Generate);
+//    connect(&MyTcp,tcp::Tcp_Get_Image_Signals,&MyImg,imagedatamanage::Image_Generate);
+//    connect(&MyTcp,tcp::Tcp_Get_Result_Signals,&MyImg,imagedatamanage::Result_Generate);
 
     //初始化图像数组并显示图像
     for(int i=0;i<Img_Size;i++)
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&MyCom,SerialPort::SerialPort_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
     connect(&MyCom,SerialPort::SerialPort_Get_Mode_Signals,this,MainWindow::Plane_mode_Dis);
-    connect(&MyTcp,tcp::Tcp_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
+//    connect(&MyTcp,tcp::Tcp_Get_Fps_Signals,this,MainWindow::Plane_fps_Dis);
 
 }
 
@@ -94,8 +94,8 @@ MainWindow::~MainWindow()
     MyComThread.quit();   //结束串口线程
     MyComThread.wait();   //等待线程完全结束
 
-    MyTcpThread.quit();
-    MyTcpThread.wait();
+//    MyTcpThread.quit();
+//    MyTcpThread.wait();
 
     MyImgThread.quit();
     MyImgThread.wait();
@@ -211,7 +211,7 @@ void MainWindow::on_DataDisplay_Send_clicked()
     StringToHex(tmp,data);//将str字符串转换为16进制的形式
 
     MyCom.SerialPort_In_To_Port(data);
-    MyTcp.Tcp_In_To_Tcp(data);
+//    MyTcp.Tcp_In_To_Tcp(data);
 }
 
 void MainWindow::Display_on_DataDisplay_ReceiveBox(QByteArray data)
