@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     MyTcp.moveToThread(&MyTcpThread);
     MyTcpThread.start();
 
-    connect(&MyTcp,tcp::Tcp_Connect_ok_Signals,this,MainWindow::Tcp_Connect_Ok_Slots);
-    connect(&MyTcp,tcp::Tcp_Disconnect_Signals,this,MainWindow::Tcp_Disconnect_Slots);
+//    connect(&MyTcp,tcp::Tcp_Connect_ok_Signals,this,MainWindow::Tcp_Connect_Ok_Slots);
+//    connect(&MyTcp,tcp::Tcp_Disconnect_Signals,this,MainWindow::Tcp_Disconnect_Slots);
 
     connect(&MyTcp,tcp::Tcp_Out_Of_Tcp_Data_Signals,this,MainWindow::Display_on_DataDisplay_ReceiveBox);
 
