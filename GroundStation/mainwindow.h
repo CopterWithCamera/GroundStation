@@ -72,16 +72,6 @@ private slots:
 
     void on_checkBox_datatrans_stateChanged(int arg1);
 
-    void on_Command_Image_stateChanged(int arg1);
-
-    void on_Command_Result_stateChanged(int arg1);
-
-    void on_Command_Wave_stateChanged(int arg1);
-
-    void on_Command_Fps_stateChanged(int arg1);
-
-    void on_Command_Sd_stateChanged(int arg1);
-
 private:
     Ui::MainWindow *ui;
 
